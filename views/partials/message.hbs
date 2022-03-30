@@ -1,0 +1,21 @@
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    *為必填
+</div>
+
+{{#if error_messages}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error_messages }}
+    <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}
+
+{{#if success_messages }}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ success_messages }}
+    <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}
