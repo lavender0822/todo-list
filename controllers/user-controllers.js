@@ -13,10 +13,11 @@ const userController = {
     },
 
     login: (req, res) => {
-
+        req.flash('success_messages', '成功登入！')
+        res.redirect('/todos')
     },
 
-    register: async (req, res,  next) => {
+    register: async (req, res, next) => {
         const { name, email, account, password } = req.body
 
         try {
@@ -32,6 +33,12 @@ const userController = {
             req.flash('success_messages', '成功註冊帳號!')
             res.redirect('/login')
         } catch (err) { next(err) }
+    },
+
+    logout: (req, res) => {
+        req.logout()
+        req.flash('success_msg', '你已成功登出')
+        res.redirect('/login')
     }
 }
 
