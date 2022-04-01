@@ -18,11 +18,14 @@ module.exports = {
       is_done: {
         type: Sequelize.BOOLEAN
       },
+      date: {
+        type: Sequelize.DATEONLY
+      },
       start_time: {
-        type: Sequelize.DATE
+        type: Sequelize.TIME
       },
       end_time: {
-        type: Sequelize.DATE
+        type: Sequelize.TIME
       },
       created_at: {
         allowNull: false,

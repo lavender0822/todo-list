@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     isDone: DataTypes.BOOLEAN,
-    startTime: DataTypes.DATE,
-    endTime: DataTypes.DATE,
+    date: DataTypes.DATEONLY,
+    startTime: DataTypes.TIME,
+    endTime: DataTypes.TIME,
   }, {
     sequelize,
     modelName: 'Todo',

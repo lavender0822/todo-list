@@ -16,8 +16,9 @@ module.exports = {
       name: faker.lorem.text().substring(0, 10),
       user_id: users[Math.floor(i/DEFAULT_COUNT)].id,
       is_done: false,
-      start_time: new Date(2022, 8, 1, 8, 10),
-      end_time: new Date(2022, 8, 1, 11, 10),
+      date:  new Date(2022, 8, i),
+      start_time: new Date(2022, 8, i, 8, 10),
+      end_time: new Date(2022, 8, i, 9, 10),
       created_at: new Date(),
       updated_at: new Date()
     })

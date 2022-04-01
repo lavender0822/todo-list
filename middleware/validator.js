@@ -11,7 +11,18 @@ const registerCheck = (req, res, next) => {
     next()
 }
 
+const todoCheck = (req, res, next) => {
+    const { date, startTime, endTime } = req.body
+    if (!date && startTime) throw new Error('請填寫日期')
+    if (endTime) { 
+        if (startTime > endTime || (!startTime && endTime)) throw new Error('結束時間必須晚於開始時間')
+    }
+    
+    next()
+}
+
 module.exports = {
-    registerCheck
+    registerCheck,
+    todoCheck
 }
 

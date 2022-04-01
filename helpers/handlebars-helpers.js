@@ -1,9 +1,14 @@
-const dayjs = require('dayjs')
+const moment = require('moment')
 
-const tpTime = (time) => {
-  return dayjs(time).format('YYYY/MM/DD, hh:mm')
+const timeShow = (time) => {
+  if(time) {
+    time = time.toString().slice(0,5)
+    return time
+  } else {
+    return null
+  }
+
 }
-
 module.exports = {
-  tpTime
+  timeShow
 }

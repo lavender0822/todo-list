@@ -7,9 +7,26 @@ const todoController = {
             raw: true,
             nest: true,
             where: { userId },
-            order: [['startTime', 'asc']]
+            order: [['date', 'asc'], ['startTime', 'asc']]
         })
         res.render('todos', { todos })
+    },
+
+    createPage: (req, res) => {
+        res.render('create')
+    },
+
+    postTodo: (req, res) => {
+        const userId = req.user.id
+        const { name, date, startTime, endTime } = req.body
+        Todo.create({
+            name,
+            userId,
+            date: date || null,
+            startTime: startTime || null,
+            endTime: endTime || null
+        })
+        res.redirect('/todos')
     }
 }
 

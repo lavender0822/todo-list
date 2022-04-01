@@ -1,4 +1,4 @@
-<a href="/todos/new" class="btn btn-primary mb-3">Create</a>
+<a href="/todos/create" class="btn btn-primary mb-3">Create</a>
 <ul class="list-group">
   {{#each todos}}
   <li class="list-group-item">
@@ -14,7 +14,8 @@
 
       <div class="col-auto">
         <h4 style="display: inline; vertical-align: middle;">
-          {{#tpTime this.startTime }}{{/tpTime}}
+          {{#if date}}日期:{{ this.date }}{{/if}} 
+          {{#if startTime}}時間: {{#timeShow this.startTime }}{{/timeShow}}{{/if}}
         </h4>
         <a class="btn btn-secondary" href="./todos/{{ this.id }}">detail</a>
         <a class="btn btn-success" href="./todos/{{ this.id }}/edit">edit</a>
