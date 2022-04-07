@@ -5,11 +5,11 @@
             {{> message}}
             <form action="/login" method="POST">
                 <div class="form-group">
-                    <label for="account">Account</label>
+                    <label for="account">Account</label><label class="text-danger">*</label>
                     <input type="account" id="account" name="account" class="form-control" placeholder="Enter Account">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Password</label><label class="text-danger">*</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>

@@ -23,6 +23,7 @@ router.post('/register', registerCheck, userController.register)
 router.use('/users', user)
 router.use('/todos', authenticator, todo)
 
+router.use('/', (req, res) => res.redirect('/todos'))
 router.use('/', generalErrorHandler)
 
 module.exports = router

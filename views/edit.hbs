@@ -1,0 +1,29 @@
+<form action="/todos/{{ todo.id }}/edit?_method=PUT" method="POST">
+    <div class="row mt-5">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body">
+                <h1 class="text-center mt-3">修改待辦事項</h1>
+                {{> message}}
+                <div class="form-group">
+                    <label for="name">待辦事項</label><label class="text-danger">*</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="待辦事項"
+                        value="{{ todo.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">原日期: {{ todo.date }}</label>
+                    <input type="date" id="date" name="date" class="form-control" placeholder="日期" value="日期:  ">
+                </div>
+                <div class="form-group">
+                    <label for="startTime">原開始時間: {{ todo.startTime }}</label>
+                    <input type="time" id="startTime" name="startTime" class="form-control" placeholder="開始時間">
+                </div>
+                <div class="form-group">
+                    <label for="endTime">原結束時間: {{todo.endTime }}</label>
+                    <input type="time" id="endTime" name="endTime" class="form-control" placeholder="結束時間">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+                <a href="/todos/{{ todo.id }}" type="button" class="btn btn-info btn-block">back</a>
+            </div>
+        </div>
+    </div>
+</form>
