@@ -10,7 +10,7 @@ module.exports = {
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
 
-    await queryInterface.bulkInsert('Todos', 
+    await queryInterface.bulkInsert('Lists', 
     Array.from({ length: users.length * DEFAULT_COUNT }).map((_, i) =>
     ({
       name: faker.lorem.text().substring(0, 10),
@@ -26,6 +26,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Todos', null, {})
+    await queryInterface.bulkDelete('Lists', null, {})
   }
 };

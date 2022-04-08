@@ -1,25 +1,39 @@
-<a href="/todos/create" class="btn btn-primary mb-3">Create</a>
-<ul class="list-group">
-  {{#each todos}}
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-auto mr-auto">
-        <input style="vertical-align: middle;" type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}}
-          disabled>
-        <h4 style="display: inline; vertical-align: middle;">
-          {{ this.name }}
-        </h4>
-
-      </div>
-
-      <div class="col-auto">
-        <h4 style="display: inline; vertical-align: middle;">
-          {{#if date}}日期:{{ this.date }}{{/if}} 
-          {{#if startTime}}時間: {{#timeShow this.startTime }}{{/timeShow}}{{/if}}
-        </h4>
-        <a class="btn btn-success" href="./todos/{{ this.id }}">detail</a>
-      </div>
-    </div>
-  </li>
-  {{/each}}
-</ul>
+{{> list-tabs route='todos'}}
+<table class="table align-middle">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">項目</th>
+            <th scope="col">狀態</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each lists}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>
+                {{#if this.isDone}}
+                完成
+                {{else}}
+                未完成
+                {{/if}}
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <form action="/lists/{{this.id}}?_method=PATCH" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-info">
+                        狀態更改
+                        </a>
+                    </button>
+                </form>
+                <a class="btn btn-success" href="/lists/{{ this.id }}">detail</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

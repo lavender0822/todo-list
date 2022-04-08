@@ -11,7 +11,7 @@ const registerCheck = (req, res, next) => {
     next()
 }
 
-const todoCheck = (req, res, next) => {
+const listCheck = (req, res, next) => {
     const { date, startTime, endTime } = req.body
     if (!date && startTime) throw new Error('請填寫日期')
     if (endTime) { 
@@ -23,6 +23,6 @@ const todoCheck = (req, res, next) => {
 
 module.exports = {
     registerCheck,
-    todoCheck
+    listCheck
 }
 

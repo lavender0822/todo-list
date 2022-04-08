@@ -14,7 +14,7 @@ const userController = {
 
     login: (req, res) => {
         req.flash('success_messages', '成功登入！')
-        res.redirect('/todos')
+        res.redirect('/lists/todos')
     },
 
     register: async (req, res, next) => {

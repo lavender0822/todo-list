@@ -1,12 +1,12 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Todo extends Model {
+  class List extends Model {
     static associate(models) {
-      Todo.belongsTo(models.User, { foreignKey: 'userId' })
+      List.belongsTo(models.User, { foreignKey: 'userId' })
     }
   }
-  Todo.init({
+  List.init({
     name: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     isDone: DataTypes.BOOLEAN,
@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     endTime: DataTypes.TIME,
   }, {
     sequelize,
-    modelName: 'Todo',
-    tableName: 'Todos', 
+    modelName: 'List',
+    tableName: 'Lists', 
     underscored: true
   });
-  return Todo;
+  return List;
 };

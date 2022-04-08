@@ -4,7 +4,7 @@ const router = express.Router()
 const passport = require('../config/passport')
 
 const user = require('./modules/users')
-const todo = require('./modules/todos')
+const list = require('./modules/lists')
 
 const userController = require('../controllers/user-controllers')
 
@@ -21,7 +21,7 @@ router.get('/register', userController.registerPage)
 router.post('/register', registerCheck, userController.register)
 
 router.use('/users', user)
-router.use('/todos', authenticator, todo)
+router.use('/lists', authenticator, list)
 
 router.use('/', (req, res) => res.redirect('/todos'))
 router.use('/', generalErrorHandler)

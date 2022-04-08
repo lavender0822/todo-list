@@ -1,0 +1,27 @@
+{{> list-tabs route='schedules'}}
+<table class="table align-middle">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">項目</th>
+            <th scope="col"></th>
+            <th scope="col">日期</th>
+            <th scope="col">時間</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each lists}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td></td>
+            <td>{{ this.date }}</td>
+            <td>{{#timeShow this.startTime }}{{/timeShow}}</td>
+            <td>
+                <a class="btn btn-success" href="/lists/{{ this.id }}">detail</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

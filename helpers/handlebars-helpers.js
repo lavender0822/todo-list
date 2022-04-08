@@ -7,8 +7,12 @@ const timeShow = (time) => {
   } else {
     return null
   }
+}
 
+const ifCond = (a, b, options) => {
+  return a === b ? options.fn(this) : options.inverse(this)
 }
 module.exports = {
-  timeShow
+  timeShow,
+  ifCond
 }

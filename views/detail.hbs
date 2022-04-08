@@ -1,4 +1,4 @@
-<form action="/todos/{{ todo.id }}?_method=DELETE" method="POST" style="display: inline;">
+<form action="/lists/{{ list.id }}?_method=DELETE" method="POST" style="display: inline;">
     <div class="row mt-5">
         <div class="col-md-6 m-auto">
             <div class="card card-body">
@@ -6,23 +6,24 @@
                     <div class="form-group">
                         <label for="name">待辦事項</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="待辦事項"
-                            value="{{ todo.name }}" disabled>
+                            value="{{ list.name }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="date">日期</label>
                         <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
-                            value="{{ todo.date }}" disabled>
+                            value="{{ list.date }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="startTime">開始時間</label>
-                        <input type="text" id="startTime" name="startTime" class="form-control" placeholder="--:--" value="{{ todo.startTime }}"disabled>
+                        <input type="text" id="startTime" name="startTime" class="form-control" placeholder="--:--" value="{{ list.startTime }}"disabled>
                     </div>
                     <div class="form-group">
                         <label for="endTime">結束時間</label>
-                        <input type="text" id="endTime" name="endTime" class="form-control" placeholder="--:--" value="{{ todo.endTime }}" disabled>
+                        <input type="text" id="endTime" name="endTime" class="form-control" placeholder="--:--" value="{{ list.endTime }}" disabled>
                     </div>
-                        <a type="button" class="btn btn-success btn-block" class="btn btn-success" href="/todos/{{ todo.id }}/edit">edit</a>
+                        <a type="button" class="btn btn-success btn-block" href="/lists/{{ list.id }}/edit">edit</a>
                         <button class="btn btn-danger btn-block" type="submit">delete</button>
+                        <a type="button" class="btn btn-info btn-block" href="/lists/todos">back</a>
                 </form>
             </div>
         </div>
