@@ -2,7 +2,7 @@ const { Op } = require("sequelize");
 const { List, Clock } = require('../models')
 
 const listController = {
-    getTodos: async (req, res) => {
+    getTodos: async (req, res, next) => {
         try{
             const userId = req.user.id
             const lists = await List.findAll({
@@ -14,7 +14,7 @@ const listController = {
         } catch(e) { next(e) }
     },
 
-    getSchedules: async (req, res) => {
+    getSchedules: async (req, res, next) => {
         try{
             const userId = req.user.id
             const lists = await List.findAll({
@@ -55,7 +55,7 @@ const listController = {
         }catch(e) { next(e) }
     },
 
-    editPage: async (req, res) => {
+    editPage: async (req, res, next) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id,{ raw: true })
@@ -63,7 +63,7 @@ const listController = {
         } catch(e) { next(e) }
     },
 
-    putList: async (req, res) => {
+    putList: async (req, res, next) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id)
@@ -81,7 +81,7 @@ const listController = {
         } catch(e) { next(e) }
     },
 
-    patchList: async (req, res) => {
+    patchList: async (req, res, next) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id)
@@ -91,7 +91,7 @@ const listController = {
         } catch(e) { next(e) }
     },
 
-    deleteList: async (req, res) => {
+    deleteList: async (req, res, next) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id)

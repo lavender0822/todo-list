@@ -38,6 +38,38 @@ const userController = {
         req.logout()
         req.flash('success_msg', '你已成功登出')
         res.redirect('/login')
+    },
+
+    getUser: async (req, res, next) => {
+        try{
+            const { id } = req.user
+            const user = await User.findByPk(id,{ raw: true })
+            res.render('user/profile')
+        } catch (e) { next(e) }
+    },
+
+    editPage: async (req, res, next) => {
+        try{
+            const { id } = req.user
+            const user = await User.findByPk(id,{ raw: true })
+            res.render('user/edit')
+        } catch (e) { next(e) }
+    },
+
+    putUser: async (req, res, next) => {
+        try{
+            const { id } = req.params
+            const user = await User.findByPk(id)
+            const { name, email, account, password } = req.body
+            const hash = await bcrypt.hash(password, 10)
+            await user.update({
+                name,
+                email,
+                account,
+                password: hash
+            })
+            res.redirect(`/users/${id}`)
+        } catch(e) { next(e) }
     }
 }
 
