@@ -14,19 +14,23 @@ const clockController = {
     },
 
     patchClock: async (req, res, next) => {
-        const { id } = req.params
-        const clock = await Clock.findByPk(id)
-        const { isDone, listId } = clock
-        await clock.update({isDone: !isDone })
-        res.redirect(`/lists/${listId}`)
+        try{
+            const { id } = req.params
+            const clock = await Clock.findByPk(id)
+            const { isDone, listId } = clock
+            await clock.update({isDone: !isDone })
+            res.redirect(`/lists/${listId}`)
+        } catch(e){ next(e) }
     },
 
     deleteClock: async (req, res, next) => {
-        const { id } = req.params
-        const clock = await Clock.findByPk(id)
-        const { listId } = clock
-        await clock.destroy()
-        res.redirect(`/lists/${listId}`)
+        try{
+            const { id } = req.params
+            const clock = await Clock.findByPk(id)
+            const { listId } = clock
+            await clock.destroy()
+            res.redirect(`/lists/${listId}`)
+        } catch(e){ next(e) }
     }
 }
 

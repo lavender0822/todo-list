@@ -1,4 +1,5 @@
 const { List } = require('../models')
+
 const registerCheck = (req, res, next) => {
     const data = req.body
     const { name, email, account, password, checkPassword } = data
@@ -31,7 +32,6 @@ const clockCheck = async (req, res, next) => {
             if (list.startTime && list.startTime < time) throw new Error('時間請早於清單')
         }
     } catch (e) { next(e) }
-
     next()
 }
 
@@ -40,4 +40,3 @@ module.exports = {
     listCheck,
     clockCheck
 }
-

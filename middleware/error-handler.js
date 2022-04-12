@@ -1,5 +1,4 @@
 const generalErrorHandler = (err, req, res, next) => {
-    console.log(err)
     if (err instanceof Error) {
         req.flash('error_messages', `${err.name}: ${err.message}`)
     } else {
@@ -8,7 +7,6 @@ const generalErrorHandler = (err, req, res, next) => {
     res.redirect('back')
     next(err)
 }
-
 
 module.exports = {
     generalErrorHandler

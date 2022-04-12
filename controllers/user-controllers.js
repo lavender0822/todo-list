@@ -19,7 +19,6 @@ const userController = {
 
     register: async (req, res, next) => {
         const { name, email, account, password } = req.body
-
         try {
             const userAccount = await User.findOne({ where: { account } })
             const userEmail = await User.findOne({ where: { email } })

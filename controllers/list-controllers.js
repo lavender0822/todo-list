@@ -3,24 +3,28 @@ const { List, Clock } = require('../models')
 
 const listController = {
     getTodos: async (req, res) => {
-        const userId = req.user.id
-        const lists = await List.findAll({
-            raw: true,
-            nest: true,
-            where: { userId, date: null }
-        })
-        res.render('todos', { lists })
+        try{
+            const userId = req.user.id
+            const lists = await List.findAll({
+                raw: true,
+                nest: true,
+                where: { userId, date: null }
+            })
+            res.render('todos', { lists })
+        } catch(e) { next(e) }
     },
 
     getSchedules: async (req, res) => {
-        const userId = req.user.id
-        const lists = await List.findAll({
-            raw: true,
-            nest: true,
-            where: { userId, date: { [Op.not]: null } },
-            order: [['date', 'asc'], ['startTime', 'asc']]
-        })
-        res.render('schedules', { lists })
+        try{
+            const userId = req.user.id
+            const lists = await List.findAll({
+                raw: true,
+                nest: true,
+                where: { userId, date: { [Op.not]: null } },
+                order: [['date', 'asc'], ['startTime', 'asc']]
+            })
+            res.render('schedules', { lists })
+        } catch(e) { next(e) }
     },
 
     createPage: (req, res) => {
@@ -52,40 +56,48 @@ const listController = {
     },
 
     editPage: async (req, res) => {
-        const { id } = req.params
-        const list = await List.findByPk(id,{ raw: true })
-        res.render('edit', { list })
+        try{
+            const { id } = req.params
+            const list = await List.findByPk(id,{ raw: true })
+            res.render('edit', { list })
+        } catch(e) { next(e) }
     },
 
     putList: async (req, res) => {
-        const { id } = req.params
-        const list = await List.findByPk(id)
-        const userId = req.user.id
-        const { name, date, startTime, endTime, isDone } = req.body
-        await list.update({
-            name,
-            userId,
-            isDone,
-            date: date || null,
-            startTime: startTime || null,
-            endTime: endTime || null
-        })
-        res.redirect(`/lists/${id}`)
+        try{
+            const { id } = req.params
+            const list = await List.findByPk(id)
+            const userId = req.user.id
+            const { name, date, startTime, endTime, isDone } = req.body
+            await list.update({
+                name,
+                userId,
+                isDone,
+                date: date || null,
+                startTime: startTime || null,
+                endTime: endTime || null
+            })
+            res.redirect(`/lists/${id}`)
+        } catch(e) { next(e) }
     },
 
     patchList: async (req, res) => {
-        const { id } = req.params
-        const list = await List.findByPk(id)
-        const { isDone } = list
-        list.update({isDone: !isDone})
-        res.redirect('/lists/todos')
+        try{
+            const { id } = req.params
+            const list = await List.findByPk(id)
+            const { isDone } = list
+            list.update({isDone: !isDone})
+            res.redirect('/lists/todos')
+        } catch(e) { next(e) }
     },
 
     deleteList: async (req, res) => {
-        const { id } = req.params
-        const list = await List.findByPk(id)
-        await list.destroy()
-        res.redirect('/lists/todos')
+        try{
+            const { id } = req.params
+            const list = await List.findByPk(id)
+            await list.destroy()
+            res.redirect('/lists/todos')
+        } catch(e) { next(e) }
     }
 }
 
