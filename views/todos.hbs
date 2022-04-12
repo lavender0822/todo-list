@@ -23,7 +23,6 @@
                 {{/if}}
             </td>
             <td></td>
-            <td></td>
             <td>
                 <form action="/lists/{{this.id}}?_method=PATCH" method="POST" style="display: inline;">
                     <button type="submit" class="btn btn-info">
@@ -31,7 +30,9 @@
                         </a>
                     </button>
                 </form>
-                <a class="btn btn-success" href="/lists/{{ this.id }}">detail</a>
+            </td>
+            <td>
+                <a class="btn btn-success" href="/lists/{{ this.id }}">詳細</a>
             </td>
         </tr>
         {{/each}}

@@ -1,31 +1,81 @@
-<form action="/lists/{{ list.id }}?_method=DELETE" method="POST" style="display: inline;">
+<form action="/lists/{{ list.dataValues.id }}?_method=DELETE" method="POST" style="display: inline;">
     <div class="row mt-5">
-        <div class="col-md-6 m-auto">
+        <div class="col-md-4 m-auto">
             <div class="card card-body">
-                <h1 class="text-center mt-3">待辦事項</h1>
-                    <div class="form-group">
-                        <label for="name">待辦事項</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="待辦事項"
-                            value="{{ list.name }}" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="date">日期</label>
-                        <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
-                            value="{{ list.date }}" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="startTime">開始時間</label>
-                        <input type="text" id="startTime" name="startTime" class="form-control" placeholder="--:--" value="{{ list.startTime }}"disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="endTime">結束時間</label>
-                        <input type="text" id="endTime" name="endTime" class="form-control" placeholder="--:--" value="{{ list.endTime }}" disabled>
-                    </div>
-                        <a type="button" class="btn btn-success btn-block" href="/lists/{{ list.id }}/edit">edit</a>
-                        <button class="btn btn-danger btn-block" type="submit">delete</button>
-                        <a type="button" class="btn btn-info btn-block" href="/lists/todos">back</a>
-                </form>
+                <h1 class="text-center mt-3">清單</h1>
+                <div class="form-group">
+                    <label for="name">名稱</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="待辦事項"
+                        value="{{ list.dataValues.name }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="date">日期</label>
+                    <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
+                        value="{{ list.dataValues.date }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="startTime">開始時間</label>
+                    <input type="text" id="startTime" name="startTime" class="form-control" placeholder="--:--"
+                        value="{{ list.dataValues.startTime }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="endTime">結束時間</label>
+                    <input type="text" id="endTime" name="endTime" class="form-control" placeholder="--:--"
+                        value="{{ list.dataValues.endTime }}" disabled>
+                </div>
+                <a type="button" class="btn btn-success btn-block" href="/lists/{{ list.dataValues.id }}/edit">修改</a>
+                <button class="btn btn-danger btn-block" type="submit">刪除</button>
+                <a type="button" class="btn btn-info btn-block" href="/lists/todos">回上頁</a>
             </div>
         </div>
-    </div>
 </form>
+<div class="col-md-4 m-auto">
+    <div class="card card-body">
+        <h1 class="text-center mt-3">新增鬧鐘</h1>
+        <form action="/clocks/create/{{list.dataValues.id}}" method="POST">
+            {{> message}}
+            <div class="form-group">
+                <label for="date">日期</label><label class="text-danger">*</label>
+                <input type="date" id="date" name="date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="time">開始時間</label><label class="text-danger">*</label>
+                <input type="time" id="time" name="time" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mb-3">
+                新增
+            </button>
+        </form>
+    </div>
+</div>
+<div class="col-md-4 m-auto">
+    <div class="card card-body">
+        <h1 class="text-center mt-3">鬧鐘</h1>
+        {{#each list.Clocks}}
+        <div class="card">
+            <div class="card-body">
+                日期: {{this.dataValues.date}} 時間: {{this.dataValues.time}}
+
+                <form action="/clocks/{{this.dataValues.id}}?_method=PATCH" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-info">
+                        開關
+                    </button>
+                </form>
+                {{#if this.dataValues.isDone}}
+                開啟
+                {{else}}
+                關閉
+                {{/if}}
+                <form action="/clocks/{{this.dataValues.id}}?_method=DELETE" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">
+                        刪除
+                    </button>
+                </form>
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+</div>

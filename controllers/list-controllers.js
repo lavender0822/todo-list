@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { List } = require('../models')
+const { List, Clock } = require('../models')
 
 const listController = {
     getTodos: async (req, res) => {
@@ -41,10 +41,14 @@ const listController = {
         res.redirect('/lists/todos')
     },
 
-    detailPage: async (req, res) => {
-        const { id } = req.params
-        const list = await List.findByPk(id,{ raw: true })
-        res.render('detail', { list })
+    detailPage: async (req, res, next) => {
+        try{
+            const { id } = req.params
+            const list = await List.findByPk(id,{
+                include: [{ model: Clock }]
+            })
+            res.render('detail', { list })
+        }catch(e) { next(e) }
     },
 
     editPage: async (req, res) => {

@@ -1,5 +1,4 @@
-const { check, validationResult } = require('express-validator')
-
+const { List } = require('../models')
 const registerCheck = (req, res, next) => {
     const data = req.body
     const { name, email, account, password, checkPassword } = data
@@ -17,12 +16,28 @@ const listCheck = (req, res, next) => {
     if (endTime) { 
         if (startTime > endTime || (!startTime && endTime)) throw new Error('結束時間必須晚於開始時間')
     }
-    
+    next()
+}
+
+const clockCheck = async (req, res, next) => {
+    try{
+        const { id } = req.params
+        const { date, time } = req.body
+        const list = await List.findByPk(id,{ raw: true })
+        if (!date || !time) throw new Error('請填寫完整')
+        if (list.date && list.date < date) {
+            throw new Error('日期請早於清單')
+        } else if (list.date === date){
+            if (list.startTime && list.startTime < time) throw new Error('時間請早於清單')
+        }
+    } catch (e) { next(e) }
+
     next()
 }
 
 module.exports = {
     registerCheck,
-    listCheck
+    listCheck,
+    clockCheck
 }
 
