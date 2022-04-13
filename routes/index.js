@@ -8,6 +8,7 @@ const list = require('./modules/lists')
 const clocks = require('./modules/clocks')
 
 const userController = require('../controllers/user-controllers')
+const listController = require('../controllers/list-controllers')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { registerCheck } = require('../middleware/validator')
@@ -20,6 +21,8 @@ router.get('/logout', userController.logout)
 
 router.get('/register', userController.registerPage)
 router.post('/register', registerCheck, userController.register)
+
+router.get('/month', authenticator, listController.getMonth)
 
 router.use('/users', authenticator, user)
 router.use('/lists', authenticator, list)

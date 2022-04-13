@@ -1,5 +1,28 @@
 {{> list-tabs route='schedules'}}
-<table class="table align-middle">
+ <div class="form-group justify-content-center">
+      <form action="/month" id="filter" onchange="filter.submit()">
+        <div class="month-selector col-sm">
+          <h6><i class="fas fa-calendar-alt"></i> Month</h6>
+          <select name="month" class="form-control w-50 border-secondary">
+            <option value="all">All</option>
+            <option {{eq month '1'}} value="1">1</option>
+            <option {{eq month '2'}} value="2">2</option>
+            <option {{eq month '3'}} value="3">3</option>
+            <option {{eq month '4'}} value="4">4</option>
+            <option {{eq month '5'}} value="5">5</option>
+            <option {{eq month '6'}} value="6">6</option>
+            <option {{eq month '7'}} value="7">7</option>
+            <option {{eq month '8'}} value="8">8</option>
+            <option {{eq month '9'}} value="9">9</option>
+            <option {{eq month '10'}} value="10">10</option>
+            <option {{eq month '11'}} value="11">11</option>
+            <option {{eq month '12'}} value="12">12</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+<table class="table align-middle mx-1">
     <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
@@ -15,7 +38,7 @@
         <tr>
             <td>{{this.id}}</td>
             <td>{{this.name}}</td>
-            <td></td>
+            <td>{{#getMonth this.date}}{{/getMonth}}</td>
             <td>{{ this.date }}</td>
             <td>{{#timeShow this.startTime }}{{/timeShow}}</td>
             <td>

@@ -27,6 +27,28 @@ const listController = {
         } catch(e) { next(e) }
     },
 
+    getMonth: async (req, res, next) => {
+        try {
+            const userId = req.user.id
+            const { month }= req.query
+            const year = '2022'
+            if (month === "all") {
+                res.redirect('/lists/schedules')
+            } else{
+                let startDate = Date.parse(year + '-' + month)
+                const endDate = startDate + 2592000000
+                const lists = await List.findAll({
+                    raw: true,
+                    nest: true,
+                    where: { userId, date: { [Op.between]: [startDate, endDate] } },
+                    order: [['date', 'asc'], ['startTime', 'asc']]
+                })
+                res.render('schedules', { lists, month })
+            }
+        } catch(e) { next(e) }
+        
+    },
+
     createPage: (req, res) => {
         res.render('create')
     },
@@ -52,7 +74,7 @@ const listController = {
                 include: [{ model: Clock }]
             })
             res.render('detail', { list })
-        }catch(e) { next(e) }
+        } catch(e) { next(e) }
     },
 
     editPage: async (req, res, next) => {

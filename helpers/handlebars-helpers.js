@@ -7,11 +7,29 @@ const timeShow = (time) => {
   }
 }
 
+const getYear = (date) => {
+    date = date.toString().slice(0,4)
+    return date
+}
+
+const getMonth = (date) => {
+    date = date.toString().slice(5,7)
+    return date
+}
+
 const ifCond = (a, b, options) => {
   return a === b ? options.fn(this) : options.inverse(this)
 }
 
+const eq = (a, b) => {
+  if (a === b)
+    return 'selected'
+}
+
 module.exports = {
   timeShow,
-  ifCond
+  ifCond,
+  getYear,
+  getMonth,
+  eq
 }
