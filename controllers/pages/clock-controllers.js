@@ -1,4 +1,4 @@
-const { Clock } = require('../models')
+const { Clock } = require('../../models')
 
 const clockController = {
     postClock: (req, res) => {

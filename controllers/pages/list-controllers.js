@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { List, Clock } = require('../models')
+const { List, Clock } = require('../../models')
 
 const listController = {
     getTodos: async (req, res, next) => {

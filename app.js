@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
 const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
-const router = require('./routes')
+const { pages, apis } = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -31,7 +31,9 @@ app.use((req, res, next) => {
     res.locals.user = req.user
     next()
 })
-app.use(router)
+
+app.use('/api', apis)
+app.use(pages)
 
 app.listen(PORT, () => {
     console.log(`App is running on localhost:${PORT}`)

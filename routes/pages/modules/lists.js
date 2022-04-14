@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const listController = require('../../controllers/list-controllers')
+const listController = require('../../../controllers/pages/list-controllers')
 
-const { listCheck } = require('../../middleware/validator')
-const { generalErrorHandler } = require('../../middleware/error-handler')
+const { listCheck } = require('../../../middleware/validator')
+const { generalErrorHandler } = require('../../../middleware/error-handler')
 
 router.get('/create', listController.createPage)
 router.post('/create', listCheck, listController.postList)

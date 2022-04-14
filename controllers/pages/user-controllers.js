@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const { check, validationResult } = require('express-validator')
-const { User } = require('../models')
+const { User } = require('../../models')
 
 const userController = {
     loginPage: (req, res) => {
