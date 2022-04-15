@@ -1,6 +1,3 @@
-const { Op } = require("sequelize");
-const { List, Clock } = require('../../models')
-
 const listServices = require('../../services/list-services')
 
 const listController = {
