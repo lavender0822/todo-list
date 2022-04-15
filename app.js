@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(methodOverride('_method'))
 app.use(session({ secret:  process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())

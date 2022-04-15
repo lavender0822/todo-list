@@ -12,7 +12,8 @@ const registerCheck = (req, res, next) => {
 }
 
 const listCheck = (req, res, next) => {
-    const { date, startTime, endTime } = req.body
+    const { name, date, startTime, endTime } = req.body
+    if (!name) throw new Error('請填寫名稱')
     if (!date && startTime) throw new Error('請填寫日期')
     if (endTime) { 
         if (startTime > endTime || (!startTime && endTime)) throw new Error('結束時間必須晚於開始時間')

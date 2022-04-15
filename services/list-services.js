@@ -1,8 +1,8 @@
 const { Op } = require("sequelize");
-const { List, Clock } = require('../../models')
+const { List, Clock } = require('../models')
 
-const listController = {
-    getTodos: async (req, res, next) => {
+const listServices = {
+    getTodos: async (req, cb) => {
         try{
             const userId = req.user.id
             const lists = await List.findAll({
@@ -10,11 +10,11 @@ const listController = {
                 nest: true,
                 where: { userId, date: null }
             })
-            res.render('todos', { lists })
-        } catch(e) { next(e) }
+            cb(null, { lists })
+        } catch(e) { cb(e) }
     },
 
-    getSchedules: async (req, res, next) => {
+    getSchedules: async (req, cb) => {
         try{
             const userId = req.user.id
             const lists = await List.findAll({
@@ -23,17 +23,17 @@ const listController = {
                 where: { userId, date: { [Op.not]: null } },
                 order: [['date', 'asc'], ['startTime', 'asc']]
             })
-            res.render('schedules', { lists })
-        } catch(e) { next(e) }
+            cb(null, { lists })
+        } catch(e) { cb(e) }
     },
 
-    getMonth: async (req, res, next) => {
+    getMonth: async (req, cb, res) => {
         try {
             const userId = req.user.id
             const { month }= req.query
             const year = '2022'
             if (month === "all") {
-                res.redirect('/lists/schedules')
+                listServices.getSchedules(req,cb)
             } else{
                 let startDate = Date.parse(year + '-' + month)
                 const endDate = startDate + 2592000000
@@ -43,53 +43,52 @@ const listController = {
                     where: { userId, date: { [Op.between]: [startDate, endDate] } },
                     order: [['date', 'asc'], ['startTime', 'asc']]
                 })
-                res.render('schedules', { lists, month })
+                cb(null, { lists, month })
             }
-        } catch(e) { next(e) }
+        } catch(e) { cb(e) }
         
     },
 
-    createPage: (req, res) => {
-        res.render('create')
-    },
-
-    postList: (req, res) => {
-        const userId = req.user.id
-        const { name, date, startTime, endTime } = req.body
-        List.create({
-            name,
-            userId,
-            isDone: false,
-            date: date || null,
-            startTime: startTime || null,
-            endTime: endTime || null
-        })
-        res.redirect('/lists/todos')
-    },
-
-    detailPage: async (req, res, next) => {
+    detailPage: async (req, cb) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id,{
                 include: [{ model: Clock }]
             })
-            res.render('detail', { list })
-        } catch(e) { next(e) }
+            cb(null, { list })
+        } catch(e) { cb(e) }
     },
 
-    editPage: async (req, res, next) => {
+    editPage: async (req, cb) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id,{ raw: true })
-            res.render('edit', { list })
-        } catch(e) { next(e) }
+            cb(null, { list })
+        } catch(e) { cb(e) }
     },
 
-    putList: async (req, res, next) => {
+    postList: async (req, cb) => {
+        try{
+            const userId = req.user.id
+            const { name, date, startTime, endTime } = req.body
+            const newList = await List.create({
+                name,
+                userId,
+                isDone: false,
+                date: date || null,
+                startTime: startTime || null,
+                endTime: endTime || null
+            })
+            cb(null, {list: newList})
+        } catch(e) { cb(e) }
+    },
+
+    putList: async (req, cb) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id)
             const userId = req.user.id
+            if (list.userId !== userId) throw new Error('無權更改')
             const { name, date, startTime, endTime, isDone } = req.body
             await list.update({
                 name,
@@ -99,28 +98,34 @@ const listController = {
                 startTime: startTime || null,
                 endTime: endTime || null
             })
-            res.redirect(`/lists/${id}`)
-        } catch(e) { next(e) }
+            cb(null, { list })
+        } catch(e) { cb(e) }
     },
 
-    patchList: async (req, res, next) => {
+    patchList: async (req, cb) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id)
+            const userId = req.user.id
+            if (list.userId !== userId) throw new Error('無權更改')
             const { isDone } = list
             list.update({isDone: !isDone})
-            res.redirect('/lists/todos')
-        } catch(e) { next(e) }
+            cb(null,{ list })
+        } catch(e) { cb(e) }
     },
 
-    deleteList: async (req, res, next) => {
+    deleteList: async (req, cb) => {
         try{
             const { id } = req.params
             const list = await List.findByPk(id)
+            const userId = req.user.id
+            console.log(list.userId,userId)
+            if (list.userId !== userId) throw new Error('無權刪除')
+            if (!list) throw new Error('此清單不存在')
             await list.destroy()
-            res.redirect('/lists/todos')
-        } catch(e) { next(e) }
+            cb(null, { list })
+        } catch(e) { cb(e) }
     }
 }
 
-module.exports = listController
+module.exports = listServices

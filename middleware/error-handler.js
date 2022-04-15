@@ -10,12 +10,12 @@ const generalErrorHandler = (err, req, res, next) => {
 
 const apiErrorHandler = (err, req, res, next) => {
     if (err instanceof Error) {
-        res.status(500).json({
+        res.status(300).json({
             status: 'error',
             message: `${err.name}: ${err.message}`
             })
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 status: 'error',
                 message: `${err}`
             })

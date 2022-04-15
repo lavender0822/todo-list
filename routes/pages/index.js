@@ -7,8 +7,8 @@ const user = require('./modules/users')
 const list = require('./modules/lists')
 const clocks = require('./modules/clocks')
 
-const userController = require('../../controllers/pages/user-controllers')
-const listController = require('../../controllers/pages/list-controllers')
+const userController = require('../../controllers/pages/user-controller')
+const listController = require('../../controllers/pages/list-controller')
 
 const { generalErrorHandler } = require('../../middleware/error-handler')
 const { registerCheck } = require('../../middleware/validator')
