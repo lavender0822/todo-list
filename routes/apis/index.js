@@ -5,6 +5,7 @@ const passport = require('../../config/passport')
 
 const list = require('./modules/lists')
 const user = require('./modules/users')
+const clock = require('./modules/clocks')
 
 const listController = require('../../controllers/apis/list-controller')
 const userController = require('../../controllers/apis/user-controller')
@@ -21,6 +22,7 @@ router.get('/month', authenticated, listController.getMonth)
 
 router.use('/lists', authenticated, list)
 router.use('/users', authenticated, user)
+router.use('/clocks', authenticated, clock)
 
 router.use('/', apiErrorHandler)
 

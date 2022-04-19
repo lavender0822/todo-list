@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const clockController = require('../../../controllers/pages/clock-controller')
+const clockController = require('../../../controllers/apis/clock-controller')
 
 const { clockCheck } = require('../../../middleware/validator')
 

@@ -1,36 +1,27 @@
 const { Clock } = require('../../models')
 
+const clockService = require('../../services/clock-services')
+
 const clockController = {
-    postClock: (req, res) => {
-        const listId = req.params.id
-        const { date, time } = req.body
-        Clock.create({
-            listId,
-            date,
-            time,
-            isDone: false
+    postClock: (req, res, next) => {
+        clockService.postClock(req, (err) => {
+            if (err) return next(err)
+            res.redirect(`/lists/${ req.params.id }`)
         })
-        res.redirect(`/lists/${ listId }`)
     },
 
     patchClock: async (req, res, next) => {
-        try{
-            const { id } = req.params
-            const clock = await Clock.findByPk(id)
-            const { isDone, listId } = clock
-            await clock.update({isDone: !isDone })
-            res.redirect(`/lists/${listId}`)
-        } catch(e){ next(e) }
+        clockService.patchClock(req, (err) => {
+            if (err) return next(err)
+            res.redirect(`back`)
+        })
     },
 
     deleteClock: async (req, res, next) => {
-        try{
-            const { id } = req.params
-            const clock = await Clock.findByPk(id)
-            const { listId } = clock
-            await clock.destroy()
-            res.redirect(`/lists/${listId}`)
-        } catch(e){ next(e) }
+        clockService.deleteClock(req, (err) => {
+            if (err) return next(err)
+            res.redirect(`back`)
+        })
     }
 }
 

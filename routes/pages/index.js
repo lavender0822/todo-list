@@ -5,7 +5,7 @@ const passport = require('../../config/passport')
 
 const user = require('./modules/users')
 const list = require('./modules/lists')
-const clocks = require('./modules/clocks')
+const clock = require('./modules/clocks')
 
 const userController = require('../../controllers/pages/user-controller')
 const listController = require('../../controllers/pages/list-controller')
@@ -26,7 +26,7 @@ router.get('/month', authenticator, listController.getMonth)
 
 router.use('/users', authenticator, user)
 router.use('/lists', authenticator, list)
-router.use('/clocks', authenticator, clocks)
+router.use('/clocks', authenticator, clock)
 
 router.use('/', (req, res) => res.redirect('/lists/todos'))
 router.use('/', generalErrorHandler)
