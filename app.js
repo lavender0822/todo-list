@@ -7,14 +7,15 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
-const bcrypt = require('bcryptjs')
 const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
+const cors = require('cors')
 
 const { pages, apis } = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000
 
+app.use(cors())
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
