@@ -70,11 +70,12 @@ const listServices = {
     postList: async (req, cb) => {
         try{
             const userId = req.user.id
-            const { name, date, startTime, endTime, descripitioin } = req.body
+            const { name, date, startTime, endTime, description } = req.body
+            console.log(req.body)
             const newList = await List.create({
                 name,
                 userId,
-                descripitioin: descripitioin || null,
+                description: description || null,
                 isDone: false,
                 date: date || null,
                 startTime: startTime || null,
@@ -90,11 +91,11 @@ const listServices = {
             const list = await List.findByPk(id)
             const userId = req.user.id
             if (list.userId !== userId) throw new Error('無權更改')
-            const { name, date, startTime, endTime, isDone, descripitioin } = req.body
+            const { name, date, startTime, endTime, isDone, description } = req.body
             await list.update({
                 name,
                 userId,
-                descripitioin: descripitioin || null,
+                description: description || null,
                 isDone,
                 date: date || null,
                 startTime: startTime || null,
