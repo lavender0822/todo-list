@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATEONLY,
     startTime: DataTypes.TIME,
     endTime: DataTypes.TIME,
+    description: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'List',

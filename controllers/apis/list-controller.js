@@ -34,7 +34,7 @@ const listController = {
     },
 
     deleteList: async (req, res, next) => {
-        listServices.patchList(req, (err,data) => err ? next(err): res.json(data))
+        listServices.deleteList(req, (err,data) => err ? next(err): res.json(data))
     }
 }
 

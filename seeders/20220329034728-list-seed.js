@@ -20,7 +20,8 @@ module.exports = {
       start_time: new Date(2022, 8, i, 8, 10),
       end_time: new Date(2022, 8, i, 9, 10),
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
+      description: faker.lorem.text().substring(0, 10)
     })
   ), {})
   },
