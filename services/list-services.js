@@ -10,7 +10,6 @@ const listServices = {
                 nest: true,
                 where: { userId, date: null }
             })
-            console.log(lists)
             cb(null, { lists })
         } catch(e) { cb(e) }
     },
@@ -24,7 +23,6 @@ const listServices = {
                 where: { userId, date: { [Op.not]: null } },
                 order: [['date', 'asc'], ['startTime', 'asc']]
             })
-            console.log(lists)
             cb(null, { lists })
         } catch(e) { cb(e) }
     },
@@ -76,7 +74,7 @@ const listServices = {
             const newList = await List.create({
                 name,
                 userId,
-                description,
+                description: description || null,
                 isDone: false,
                 date: date || null,
                 startTime: startTime || null,
