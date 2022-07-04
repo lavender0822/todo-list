@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 const { User } = require('../models')
+const { localFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
     register: async (req, cb) => {
@@ -43,12 +44,14 @@ const userController = {
             const user = await User.findByPk(id)
             const { name, email, account, password } = req.body
             const hash = await bcrypt.hash(password, 10)
+            const { file } = req
+            const filePath = localFileHandler(file)
             const newUser = await user.update({
                 name,
                 email,
                 account,
                 password: hash,
-                raw: true 
+                avatar: filePath || null
             })
             cb(null, { user: newUser.toJSON() })
         } catch(e) { cb(e) }

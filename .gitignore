@@ -1,3 +1,5 @@
 /node_modules
 /npm.txt
 /.env
+/temp
+/upload
