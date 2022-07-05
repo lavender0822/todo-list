@@ -43,15 +43,20 @@ const userController = {
             const { id } = req.user
             const user = await User.findByPk(id)
             const { name, email, account, password } = req.body
+            const userAccount = await User.findOne({ where: { account } })
+            const userEmail = await User.findOne({ where: { email } })
+
+            if (userAccount.id != id) throw new Error('帳號已存在')
+            if (userEmail.id != id) throw new Error('信箱已被使用')
             const hash = await bcrypt.hash(password, 10)
             const { file } = req
-            const filePath = localFileHandler(file)
+            const avatar = file ? localFileHandler(file) : null
             const newUser = await user.update({
                 name,
                 email,
                 account,
                 password: hash,
-                avatar: filePath || null
+                avatar
             })
             cb(null, { user: newUser.toJSON() })
         } catch(e) { cb(e) }
